@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="p_jwt_validator_adrianlazar-personal",
+    name="py_jwt_validator",
     version="1.0.0",
     author="Adrian Lazar",
     author_email="adrian.lazar95@outlook.com",
