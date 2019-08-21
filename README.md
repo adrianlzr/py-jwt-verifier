@@ -1,6 +1,6 @@
 # py-jwt-validator
  
-JWT Signature Validator, for JWT signed with Asymetric Keys, public key compiled from exponent and modulus.
+JWT Signature Validator, for JWT signed with Asymmetric Keys, public key compiled from exponent and modulus.
 
 ----------------
 
