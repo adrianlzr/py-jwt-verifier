@@ -33,7 +33,7 @@ except PyJwtException:
     print('Exception was catched.')
 ```
 
-The class **PyJwtValidator** currently accepts:
+* The class **PyJwtValidator** currently accepts:
 
 Attribute | Required | Default value
 ----------|----------|--------------
@@ -44,7 +44,7 @@ iss - Issuer | No | None
 auto_verify | No | **True**
 check_expiry | No | **True**
 
-The class method **verify(**) currently accepts:
+* The class method **verify(**) currently accepts:
 
 Attribute | Required | Default value
 ----------|----------|--------------
@@ -85,7 +85,7 @@ The reason why this class returns **None** or exception is to provide more flexi
 It is recommended to use it within **try:** **except** blocks. 
 
 ----------------
-# UPCOMING IN FUTURE RELEASES
+### UPCOMING IN FUTURE RELEASES
 
 - [x] Disable auto signature verify - **auto_verify=False**
 - [x] Return Payload or None - **get_payload=True**
