@@ -45,6 +45,7 @@ auto_verify | No | **True**
 check_expiry | No | **True**
 
 The class method **verify(**) currently accepts:
+
 Attribute | Required | Default value
 ----------|----------|--------------
 get_payload | No | **False**
@@ -86,11 +87,11 @@ It is recommended to use it within **try:** **except** blocks.
 ----------------
 # UPCOMING IN FUTURE RELEASES
 
--[x] Disable auto signature verify - **auto_verify=False**
--[x] Return Payload or None - **get_payload=True**
--[x] Ommit expiry check - **check_expiry=False**
--[] Custom Claim validation
--[] Cache Control (use-case, cache-expiry)
+- [x] Disable auto signature verify - **auto_verify=False**
+- [x] Return Payload or None - **get_payload=True**
+- [x] Ommit expiry check - **check_expiry=False**
+- [] Custom Claim validation
+- [] Cache Control (use-case, cache-expiry)
 
 
 ----------------
