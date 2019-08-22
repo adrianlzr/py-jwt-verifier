@@ -90,8 +90,8 @@ It is recommended to use it within **try:** **except** blocks.
 - [x] Disable auto signature verify - **auto_verify=False**
 - [x] Return Payload or None - **get_payload=True**
 - [x] Ommit expiry check - **check_expiry=False**
-- [] Custom Claim validation
-- [] Cache Control (use-case, cache-expiry)
+- [ ] Custom Claim validation
+- [ ] Cache Control (use-case, cache-expiry)
 
 
 ----------------
