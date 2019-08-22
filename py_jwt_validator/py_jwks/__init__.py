@@ -15,6 +15,6 @@ def get_e_n(kid, issuer):
     for key in keys:
         if kid == key['kid']:
             e = key['e']
-            n = key['n'] 
+            n = key['n']
     return e, n
     
