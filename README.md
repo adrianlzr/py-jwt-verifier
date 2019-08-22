@@ -11,7 +11,7 @@ Currently, this package is just in beta status. More work is required until it c
 ## Realease notes:
 Version | Release notes
 ------------ | -------------
-0.1.0-beta | Minor release. Attributes: Class: check_expiry, auto_verify and Method(**verify()**):get_payload are now available.
+0.1.0-beta | Minor release. Increased configurability.
 0.0.1-beta | First package release.
 
 ----------------
