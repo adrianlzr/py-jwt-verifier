@@ -11,8 +11,16 @@ Currently, this package is just in beta status. More work is required until it c
 ## Realease notes:
 Version | Release notes
 ------------ | -------------
+0.2.0-beta | Minor release. Added support for AWS Cognito JWT.
 0.1.0-beta | Minor release. Increased configurability.
 0.0.1-beta | First package release.
+
+----------------
+
+## Support IdPs:
+* Okta
+* AWS Cognito
+* *More to come*
 
 ----------------
 
