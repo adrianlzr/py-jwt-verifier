@@ -5,4 +5,7 @@
 __pycache__
 */__pycache__
 dist
+build
 test.py
+Pipfile
+Pipfile.lock
