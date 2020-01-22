@@ -6,4 +6,5 @@
 dist
 test.py
 env
-.vscode
+.vscode/*
+*.vscode
