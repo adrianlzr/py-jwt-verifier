@@ -20,7 +20,7 @@ Version | Release notes
 ## Supported IdPs
 * Okta
 * AWS Cognito
-* Google
+* Google - *only ID Tokens can be verified. Access Tokens seem to have a strange format*
 * *More to come*
 
 ----------------
