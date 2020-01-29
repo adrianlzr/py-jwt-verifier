@@ -65,7 +65,7 @@ pip install py-jwt-validator
 ## Usage Examples
 ```
 from py_jwt_validator import PyJwtValidator, PyJwtException
-jwt = {access_token / id_token}
+jwt = access_token / id_token
 try:
     PyJwtValidator(jwt)
 except PyJwtException as e:
