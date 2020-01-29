@@ -5,6 +5,7 @@
 ## Realease notes
 Version | Release notes
 ------------ | -------------
+1.0.0 | **MAJOR Release.** Added support for Google, Microsoft and Auth0.
 0.5.0      | **MAJOR Release.** Production stable. Added cache control.
 0.4.0-beta | Security fix. Certificate Chain is mandatory for Okta Custom URL Domain.
 0.3.0-beta | Minor release. Added support for Okta Custom URL Domain.
@@ -20,8 +21,9 @@ Version | Release notes
 ## Supported IdPs
 * Okta
 * AWS Cognito
-* Google - *only ID Tokens can be verified. Access Tokens seem to have a strange format*
-* *More to come*
+* Google 
+* Microsoft
+* Auth0
 
 ----------------
 
@@ -190,7 +192,6 @@ For additional information in regards of how **requests_cache** works, please re
 ## UPCOMING
 
 - [ ] - HMAC256 support
-- [ ] - Additional OIDC IdPs (Facebook, Microsoft, Auth0) 
 
 ----------------
 

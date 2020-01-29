@@ -8,6 +8,7 @@ import requests
 import requests_cache
 from requests.exceptions import SSLError
 from datetime  import timedelta
+from json.decoder import JSONDecodeError
 
 class JWK:
 
@@ -37,6 +38,8 @@ class JWK:
     def compute_keys_endpoint(self, issuer):
 
         metadata_url = f"{issuer}/.well-known/openid-configuration"
+        if "//." in metadata_url: ## some issuers end with a trailing "/". Auth0 is one of the idps that set the issuer as such.
+            metadata_url = f"{issuer}.well-known/openid-configuration"
         metadata = self.get_json_response(metadata_url)
         return metadata.get("jwks_uri")
         
