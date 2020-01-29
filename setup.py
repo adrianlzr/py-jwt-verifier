@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="py_jwt_validator",
-    version="0.5.0",
+    version="0.5.1",
     author="Adrian Lazar",
     author_email="adrian.lazar95@outlook.com",
     description="Python JWT Signature Validator - Asymetric Keys - From exponent and modulus",
