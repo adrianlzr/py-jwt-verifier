@@ -7,3 +7,5 @@ vscode
 *.vscode
 .vscode
 test.py
+*.egg-info
+*.sqlite
