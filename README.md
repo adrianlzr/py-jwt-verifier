@@ -5,7 +5,7 @@
 ## Realease notes
 Version | Release notes
 ------------ | -------------
-1.0.0 | **MAJOR Release.** Added support for Google, Microsoft and Auth0.
+0.6.0 | **MAJOR Release.** Added support for Google, Microsoft and Auth0.
 0.5.0      | **MAJOR Release.** Production stable. Added cache control.
 0.4.0-beta | Security fix. Certificate Chain is mandatory for Okta Custom URL Domain.
 0.3.0-beta | Minor release. Added support for Okta Custom URL Domain.
