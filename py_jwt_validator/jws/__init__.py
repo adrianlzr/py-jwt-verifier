@@ -23,7 +23,7 @@ class JWS:
         self.verifiers = {
             "rs256": self.RSASSA_PKCS1_V1_5_VERIFY
         }
-        self.verifier = self.compute_verifier()(self.jwk, self.utils, self.kid, self.issuer, self.message, self.signature)
+        self.verifier = self.compute_verifier()(self.py_jwt_exception, self.jwk, self.utils, self.kid, self.issuer, self.message, self.signature)
 
     def compute_verifier(self):
 
@@ -48,8 +48,9 @@ class JWS:
         https://medium.com/@bn121rajesh/rsa-sign-and-verify-using-openssl-behind-the-scene-bf3cac0aade2
         """
 
-        def __init__(self, jwk_instance, utils_instance, kid, issuer, message, signature):
+        def __init__(self, py_jwt_exception_class, jwk_instance, utils_instance, kid, issuer, message, signature):
             
+            self.py_jwt_exception = py_jwt_exception_class
             self.jwk = jwk_instance
             self.utils = utils_instance
             self.kid = kid
@@ -83,11 +84,11 @@ class JWS:
             try:
                 exponent, modulus = self.jwk.get_e_n(self.kid, self.issuer)
             except UnboundLocalError:
-                raise JWS.py_jwt_exception("no-authz")
+                raise self.py_jwt_exception("no-authz")
 
             ## Length Checking. len(signature) must equal len(modulus)
             if len(self.signature) != len(modulus):
-                raise JWS.py_jwt_exception("sig")
+                raise self.py_jwt_exception("sig")
 
             ## RSAVP1 verification
             s = self.utils.base64_to_long(self.signature)
@@ -105,4 +106,4 @@ class JWS:
             ## Else, raise Invalid Signature
             if computed_hash == public_hash:
                 return None
-            raise JWS.py_jwt_exception("sig")
+            raise self.py_jwt_exception("sig")
