@@ -12,6 +12,8 @@ Version | Release notes
 0.1.0-beta | Minor release. Increased configurability.
 0.0.1-beta | First package release.
 
+
+**PyPy**: https://pypi.org/project/py-jwt-validator/
 ----------------
 
 
