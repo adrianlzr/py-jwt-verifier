@@ -20,6 +20,7 @@ Version | Release notes
 ## Supported IdPs
 * Okta
 * AWS Cognito
+* Google
 * *More to come*
 
 ----------------
@@ -189,7 +190,7 @@ For additional information in regards of how **requests_cache** works, please re
 ## UPCOMING
 
 - [ ] - HMAC256 support
-- [ ] - Additional OIDC IdPs (Google, Facebook, Microsoft, Auth0) 
+- [ ] - Additional OIDC IdPs (Facebook, Microsoft, Auth0) 
 
 ----------------
 
