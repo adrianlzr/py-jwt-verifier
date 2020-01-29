@@ -3,7 +3,7 @@ __pycache__
 env
 dist
 build
-test.py
 vscode
 *.vscode
 .vscode
+test.py
