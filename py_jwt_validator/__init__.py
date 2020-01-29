@@ -1,71 +1,123 @@
+######################################################
+# 
+#                 PyJwtException
+#     
+######################################################
+
 class PyJwtException(Exception):
     def __init__(self, arg=None):
         self.params = {
-            'len': 'JWT length is invalid.',
-            'exp':'JWT is expired.',
-            'cid':'Invalid Client ID present in the payload.',
-            'aud':'Invalid Audience present in the payload',
-            'iss':'Invalid Issuer present in the payload',
-            'sig':'JWT Signature is not valid.',
-            'no-authz':'Okta-Specific: Access Tokens can not be validated locally without a Custom Authorization Server'
+            "alg":"Unsupported algorithm. Supported algorithms: RS256.",
+            "len": "JWT length is invalid.",
+            "exp":"JWT is expired.",
+            "cid":"Invalid Client ID present in the payload.",
+            "aud":"Invalid Audience present in the payload.",
+            "iss":"Invalid Issuer present in the payload.",
+            "custom_claim":"The specified Custom Claim/s does not seem to be valid/exist.",
+            "custom_claims_type":"The **custom_claims object must be of type dict!",
+            "sig":"JWT Signature is not valid.",
+            "no-authz":"Okta-Specific: Access Tokens can not be validated locally without a Custom Authorization Server.",
+            "ssl": "The SSL Certificate seems to be issued for a different domain or the certificate chain is not present.",
+            "cache-store":"Invalid cache store. Please choose between: memory, sqlite, mongo and redis.",
+            "cache-lifetime":"Invalid cache lifetime! The lifetime must be higher than 1 and less than 30 days."
         }
         if arg not in self.params:
-            Exception.__init__(self, 'General, non-determined error. Oups?')
+            Exception.__init__(self, "General, non-determined error. Oups?")
 
         for k, v in self.params.items():
             if k == arg:
                 Exception.__init__(self, f'{v}')
 
-import time
-from .py_jwt_b64 import b64_decode
-from .py_jwks import get_e_n
-from .py_jwt_signature import verify_signature
+
+######################################################
+# 
+#                 PyJwtValidator
+#     
+######################################################
+
+from time import time
+
+from .jwk import JWK
+from .jws import JWS
+from .utils import Utils
+
 
 class PyJwtValidator:
-    def __init__(self, jwt, cid=None, aud=None, iss=None, check_expiry=True, auto_verify=True):
-        self.jwt = jwt.split('.')
+
+    def __init__(self, jwt, 
+                cid=None, aud=None, iss=None, auto_verify=True, check_expiry=True, 
+                cache_enabled=True, cache_lifetime=1, cache_store="sqlite", 
+                cache_store_connection=None, **custom_claims):
+
+        self.jwt = jwt.split(".")
         self.is_format_valid()
-        self.decoded_jwt = b64_decode(self.jwt)
+
         self.header = self.jwt[0]
         self.payload = self.jwt[1]
         self.signature = self.jwt[2]
+        self.message = self.header.encode("ascii") + b"." + self.payload.encode("ascii") ## will be used to obtain the computed hash
+
+        self.utils = Utils()
+        self.decoded_jwt = self.utils.b64_decode(self.jwt)
         self.decoded_header = self.decoded_jwt[0]
         self.decoded_payload = self.decoded_jwt[1]
+        
         if check_expiry:
             self.is_expired()
+
         self.cid = cid
         self.aud = aud
         self.iss = iss
+        self.custom_claims = custom_claims
+        
+        self.jwk = JWK(PyJwtException, cache_enabled, cache_lifetime, cache_store, cache_store_connection)
+        self.jws = JWS(PyJwtException, self.decoded_header, self.decoded_payload, self.message, self.signature, self.jwk, self.utils)
+        
         if auto_verify is True:
             self.verify()
 
     def is_format_valid(self):
-        if len(self.jwt) < 3 or len(self.jwt) >3:
-            raise PyJwtException('len')
+
+        if len(self.jwt) < 3 or len(self.jwt) > 3:
+            raise PyJwtException("len")
 
     def is_expired(self):
-        time_now = int(time.time())
-        exp = self.decoded_payload['exp']
-        if time_now >= exp:
-            raise PyJwtException('exp')
 
+        time_now = int(time())
+        exp = self.decoded_payload.get("exp")
+        if time_now >= exp:
+            raise PyJwtException("exp")
+    
     def verify(self, get_payload=False):
+
+
+        ### CLAIM VALIDATION. 
         if self.cid:
-            if self.cid != self.decoded_payload['cid']:
-               raise PyJwtException('cid')
+            if self.cid != self.decoded_payload.get("cid"):
+               raise PyJwtException("cid")
         if self.aud:
-            if self.aud != self.decoded_payload['aud']:
-                raise PyJwtException('aud')
+            if self.aud != self.decoded_payload.get("aud"):
+                raise PyJwtException("aud")
         if self.iss:
-            if self.iss != self.decoded_payload['iss']:
-                raise PyJwtException('iss')
-        try:
-            e, n = get_e_n(self.decoded_header['kid'], self.decoded_payload['iss'])
-        except UnboundLocalError:
-            raise PyJwtException('no-authz')
-        message = self.header.encode('ascii') + b'.' + self.payload.encode('ascii')
-        verify_signature(self.signature, message, e, n)
+            if self.iss != self.decoded_payload.get("iss"):
+                raise PyJwtException("iss")
+        if self.custom_claims:
+            if not isinstance(self.custom_claims, dict):
+                raise PyJwtException("custom_claims_type")
+            for k, v in self.custom_claims.items(): # k - claim name, v - claim value
+                if v != self.decoded_payload.get(k):
+                    raise PyJwtException("custom_claim")
+
+        ### SIGNATURE VALIDATION
+        self.jws.verifier.verify_signature()           
+
+        ### OUTPUT
         if get_payload is True:
-            return self.return_data()
-    def return_data(self):
-        return self.decoded_payload
+            return self.return_payload()
+
+    def return_payload(self):
+
+        return {
+            "header":self.decoded_header,
+            "payload":self.decoded_payload
+        }
