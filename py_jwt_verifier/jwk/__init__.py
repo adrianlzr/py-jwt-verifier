@@ -25,13 +25,13 @@ class JWK:
                 requests_cache.install_cache(expire_after=self.cache_lifetime, backend=self.cache_store, connection=cache_store_connection)   
                 requests_cache.remove_expired_responses()
             except ValueError:
-                raise PyJwtException("cache-store")
+                raise self.py_jwt_exception("cache-store")
 
     def get_json_response(self, url):
         try:
             response = requests.get(url)
         except SSLError:
-            raise PyJwtException("ssl")
+            raise self.py_jwt_exception("ssl")
         json_response = response.json()
         return json_response
     
@@ -48,9 +48,14 @@ class JWK:
 
         keys_endpoint = self.compute_keys_endpoint(issuer)
         r = requests.get(keys_endpoint)
-        keys = r.json().get("keys")
+        try:
+            keys = r.json().get("keys")
+        except JSONDecodeError:
+            raise self.py_jwt_exception("json")
         for key in keys:
+            print(key)
             if kid == key.get("kid"):
                 e = key.get("e")
                 n = key.get("n")
-        return e, n
+                return e, n
+        raise self.py_jwt_exception("kid")

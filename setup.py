@@ -4,15 +4,15 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="py_jwt_validator",
-    version="0.6.0",
+    name="py_jwt_verifier",
+    version="0.7.0",
     author="Adrian Lazar",
     author_email="adrian.lazar95@outlook.com",
-    description="Python JWT Signature Validator - Asymetric Keys - From exponent and modulus",
+    description="Python JWT Verfier - Verifies the signature of a digitally signed JWT.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/adrianlzr/py-jwt-validator",
-    keywords="jwt jwt-validator python-jwt-valdidator jwt-signature signature jwt-signature-validator",
+    url="https://github.com/adrianlzr/py-jwt-verifier",
+    keywords="python jwt verifier, jwt verifier, jwt signature verifier, py-jwt-verifier, python-jwt-verifier, python jwt signature verifier",
     packages=setuptools.find_packages(),
     install_requires=[
         "six",
@@ -21,8 +21,8 @@ setuptools.setup(
         ],
     python_requires=">=3",
     project_urls={
-        "Documentation & Source":"https://github.com/adrianlzr/py-jwt-validator",
-        "Issue Tracker":"https://github.com/adrianlzr/py-jwt-validator/issues"
+        "Documentation & Source":"https://github.com/adrianlzr/py-jwt-verifier",
+        "Issue Tracker":"https://github.com/adrianlzr/py-jwt-verifier/issues"
     },
     license="MIT",
     classifiers=[

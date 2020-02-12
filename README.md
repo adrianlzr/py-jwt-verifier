@@ -1,11 +1,14 @@
-# py-jwt-validator
+# py-jwt-verifier
+
+Python JWT Verfier - Verifies the signature of a digitally signed JWT.
 ----------------
 
 
 ## Realease notes
 Version | Release notes
 ------------ | -------------
-0.6.0 | **MAJOR Release.** Added support for Google, Microsoft and Auth0.
+0.7.0      | Added support for Salesforce. Minor fixes. Latest stable version. Re-named to py_jwt_verifier.
+0.6.0      | Added support for Google, Microsoft and Auth0.
 0.5.0      | **MAJOR Release.** Production stable. Added cache control.
 0.4.0-beta | Security fix. Certificate Chain is mandatory for Okta Custom URL Domain.
 0.3.0-beta | Minor release. Added support for Okta Custom URL Domain.
@@ -24,6 +27,7 @@ Version | Release notes
 * Google 
 * Microsoft
 * Auth0
+* Salesforce
 
 ----------------
 
@@ -59,7 +63,7 @@ This library is provded as is. None of the listed IdPs will provide support for 
 
 ## Installation
 ```
-pip install py-jwt-validator
+pip install py-jwt-verifier
 ```
 
 ----------------
@@ -67,19 +71,19 @@ pip install py-jwt-validator
 
 ## Usage Examples
 ```
-from py_jwt_validator import PyJwtValidator, PyJwtException
+from py_jwt_verifier import PyJwtVerifier, PyJwtException
 jwt = access_token / id_token
 try:
-    PyJwtValidator(jwt)
+    PyJwtVerifier(jwt)
 except PyJwtException as e:
     print(f"Exception caught. Error: {e}")
 ```
 
 * If **auto_verify** is set to **False** the class will not perform the signature validation. To check the signature the **verify()** method needs to be used. By default, the method will return None. In order to return the decoded jwt data (header + payload) **True** has to be passed. Example:
 ```
-from py_jwt_validator import PyJwtValidator, PyJwtException
+from py_jwt_verifier import PyJwtVerifier, PyJwtException
 jwt = access_token / id_token
-validator = PyJwtValidator(jwt, auto_verify=False)
+validator = PyJwtVerifier(jwt, auto_verify=False)
 try:
     payload = validator.verify(True)
     print(payload)
@@ -90,9 +94,9 @@ except PyJwtException as e:
 **Custom Claim Validation:**
 
 ```
-from py_jwt_validator import PyJwtValidator, PyJwtException
+from py_jwt_verifier import PyJwtVerifier, PyJwtException
 jwt = access_token / id_token
-validator = PyJwtValidator(jwt, auto_verify=False, custom_claim_name="custom_claim_value")
+validator = PyJwtVerifier(jwt, auto_verify=False, custom_claim_name="custom_claim_value")
 try:
     payload = validator.verify(True)
     print(payload)
@@ -107,13 +111,13 @@ except PyJwtException as e:
 
 ```
 from redis import StrictRedis
-from py_jwt_validator import PyJwtValidator, PyJwtException
+from py_jwt_verifier import PyJwtVerifier, PyJwtException
 
 
 redis = StrictRedis(host="localhost", port=6390)
 
 jwt = access_token / id_token
-validator = PyJwtValidator(jwt, auto_verify=False, cache_store="redis", cache_store_connection=redis)
+validator = PyJwtVerifier(jwt, auto_verify=False, cache_store="redis", cache_store_connection=redis)
 try:
     payload = validator.verify(True)
     print(payload)
@@ -125,13 +129,13 @@ except PyJwtException as e:
 
 ```
 from pymongo import MongoClient
-from py_jwt_validator import PyJwtValidator, PyJwtException
+from py_jwt_verifier import PyJwtVerifier, PyJwtException
 
 
 mongo = MongoClient("localhost", 27017)
 
 jwt = access_token / id_token
-validator = PyJwtValidator(jwt, auto_verify=False, cache_store="mongo", cache_store_connection=mongo)
+validator = PyJwtVerifier(jwt, auto_verify=False, cache_store="mongo", cache_store_connection=mongo)
 try:
     payload = validator.verify(True)
     print(payload)
@@ -143,7 +147,7 @@ except PyJwtException as e:
 
 
 ## Class Attributes
-* The class **PyJwtValidator** currently accepts:
+* The class **PyJwtVerifier** currently accepts:
 
 Attribute | Required | Default value
 ----------|----------|--------------
@@ -185,13 +189,6 @@ This library relies on the **requests** and **requests_cache** libraries. The ca
 ### Note
 When using redis or mongo as caching database solutions, the appropriate python connector libraries will be required (pymongo / redis).
 For additional information in regards of how **requests_cache** works, please review their docs: https://requests-cache.readthedocs.io/en/latest/
-
-----------------
-
-
-## UPCOMING
-
-- [ ] - HMAC256 support
 
 ----------------
 

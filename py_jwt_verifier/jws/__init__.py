@@ -29,7 +29,7 @@ class JWS:
 
         verifier = self.verifiers.get(self.algorithm)
         if verifier is None:
-            raise PyJwtException("alg")
+            raise self.py_jwt_exception("alg")
         return verifier
 
     class RSASSA_PKCS1_V1_5_VERIFY:
@@ -63,7 +63,7 @@ class JWS:
             ## https://tools.ietf.org/html/rfc3447.html#section-5.2.2 
             ## s should be greater than 0 and less than (n-1)
             if s < 0 and s > (n - 1):
-                raise JWS.py_jwt_exception("sig") 
+                raise self.py_jwt_exception("sig") 
 
         def message_hash(self, message):
 
@@ -81,11 +81,7 @@ class JWS:
 
         def verify_signature(self):
 
-            try:
-                exponent, modulus = self.jwk.get_e_n(self.kid, self.issuer)
-            except UnboundLocalError:
-                raise self.py_jwt_exception("no-authz")
-
+            exponent, modulus = self.jwk.get_e_n(self.kid, self.issuer)
             ## Length Checking. len(signature) must equal len(modulus)
             if len(self.signature) != len(modulus):
                 raise self.py_jwt_exception("sig")
