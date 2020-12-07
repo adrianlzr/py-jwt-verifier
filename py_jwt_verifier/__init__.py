@@ -47,9 +47,9 @@ from .utils import Utils
 class PyJwtVerifier:
 
     def __init__(self, jwt, 
-                cid=None, aud=None, iss=None, auto_verify=True, check_expiry=True, 
-                cache_enabled=True, cache_lifetime=1, cache_store="sqlite", 
-                cache_store_connection=None, **custom_claims):
+                 cid=None, aud=None, iss=None, auto_verify=True, check_expiry=True,
+                 cache_enabled=True, cache_lifetime=1, cache_store="sqlite",
+                 cache_store_connection=None, oidc_metadata_url=None, **custom_claims):
 
         self.jwt = jwt.split(".")
         self.is_format_valid()
@@ -72,7 +72,7 @@ class PyJwtVerifier:
         self.iss = iss
         self.custom_claims = custom_claims
         
-        self.jwk = JWK(PyJwtException, cache_enabled, cache_lifetime, cache_store, cache_store_connection)
+        self.jwk = JWK(PyJwtException, cache_enabled, cache_lifetime, cache_store, cache_store_connection, oidc_metadata_url)
         self.jws = JWS(PyJwtException, self.decoded_header, self.decoded_payload, self.message, self.signature, self.jwk, self.utils)
         
         if auto_verify is True:
