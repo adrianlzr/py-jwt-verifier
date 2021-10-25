@@ -21,7 +21,11 @@ class Utils:
         decoded_jwt = []
         for part in _jwt:
             part += self.compute_padding(part)
-            decoded_jwt.append(loads(b64decode(part)))
+            try:
+              decoded_jwt.append(loads(b64decode(part)))
+            except Exception as e:
+              print('Basic decode failed, using urlsafe b64decode')
+              decoded_jwt.append(loads(urlsafe_b64decode(part)))
         return decoded_jwt
 
     def intarr2long(self, arr):

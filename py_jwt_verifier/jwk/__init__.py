@@ -53,7 +53,7 @@ class JWK:
         except JSONDecodeError:
             raise self.py_jwt_exception("json")
         for key in keys:
-            print(key)
+            # print(key)
             if kid == key.get("kid"):
                 e = key.get("e")
                 n = key.get("n")
