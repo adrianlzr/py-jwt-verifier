@@ -30,9 +30,11 @@ class JWK:
     def get_json_response(self, url):
         try:
             response = requests.get(url)
+            json_response = response.json()
         except SSLError:
             raise self.py_jwt_exception("ssl")
-        json_response = response.json()
+        except JSONDecodeError:
+            raise self.py_jwt_exception("json")
         return json_response
     
     def compute_keys_endpoint(self, issuer):
