@@ -20,6 +20,8 @@ class Utils:
         _jwt = jwt[0:2] #Removing signature [2]
         decoded_jwt = []
         for part in _jwt:
+            part = part.replace('_', '/')
+            part = part.replace('-', '+')
             part += self.compute_padding(part)
             decoded_jwt.append(loads(b64decode(part)))
         return decoded_jwt
