@@ -9,3 +9,6 @@ vscode
 *.egg-info
 *.sqlite
 test.py
+.idea
+.gitginore
+venv/
