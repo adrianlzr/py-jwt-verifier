@@ -27,7 +27,6 @@ class JWK:
         if cache_enabled:
             try:
                 requests_cache.install_cache(expire_after=self.cache_lifetime, backend=self.cache_store, connection=cache_store_connection)
-                requests_cache.remove_expired_responses()
             except ValueError:
                 raise self.py_jwt_exception("cache-store")
 
