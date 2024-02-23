@@ -84,12 +84,14 @@ class PyJwtVerifier:
             raise PyJwtException("len")
 
     def is_expired(self):
-
-        time_now = int(time())
+        # expiry claim is optional
         exp = self.decoded_payload.get("exp")
-        if time_now >= exp:
-            raise PyJwtException("exp")
-    
+        if exp:
+            time_now = int(time())
+            
+            if time_now >= exp:
+                raise PyJwtException("exp")
+
     def verify(self, get_payload=False):
 
 
