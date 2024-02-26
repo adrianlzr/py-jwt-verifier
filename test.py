@@ -5,5 +5,4 @@ jwt = "eyJraWQiOiI3Vkl4OWZKZlVSTmU2RVhTYmd3c1A0VTRHRnZXQjhFYloxcjAtNVVLazU4IiwiY
 try:
     print(PyJwtVerifier(jwt, auto_verify=False, check_expiry=False).verify(True))
 except PyJwtException as e:
-
     print(f"Exception caught. Error: {e}")
