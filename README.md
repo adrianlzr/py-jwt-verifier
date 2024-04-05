@@ -54,8 +54,8 @@ This library is provded as is. None of the listed IdPs will provide support for 
 2. After the above checks are done, it will verify the token signature with the apropriate signing algorithm based on the "alg" header claim. If the signature is valid, it will return **None**. Else, it will raise a exception.
 
     * If a check fails at any given step, the exception **PyJwtException** will be raised.
-    * The /.well-knwon/openid-configuration endoint will be compiled based on the 'iss' claim.
-    * The /keys endpoint will be determined from the output of the /.well-knwon/openid-configuration endpoint
+    * The /.well-known/openid-configuration endoint will be compiled based on the 'iss' claim.
+    * The /keys endpoint will be determined from the output of the /.well-known/openid-configuration endpoint
     * The response from /keys will be cached (**requests_cache**) for subsequent calls.
     
 ----------------
@@ -181,7 +181,7 @@ This library relies on the **requests** and **requests_cache** libraries. The ca
 
 
 ### Cache Control attributes explained
-* cache_enabled - Attribute type: Boolean - Accepted Values: True / False. Determines if the cache control mechanism will be used. If set to False, the response from the /.well-knwon/openid-configuration and /keys endpoints will never be cached. 
+* cache_enabled - Attribute type: Boolean - Accepted Values: True / False. Determines if the cache control mechanism will be used. If set to False, the response from the /.well-known/openid-configuration and /keys endpoints will never be cached. 
 * cache_lifetime - Attribute type: Integer - Accepted Values: 1 - 30. Represents the number of *days* the cache will be stored and used. The maximum value can not be higher than 30 days or less than 1 day.
 * cache_store - Attribute type: String - Accepted Values: "memory", "sqlite", "mongo", "redis". Determines how and where the **requests_cache** library will store the responses and connect to the caching store. When there is no cache_store_connection provided, it will rely on the defaults for mongo and redis.
 * cache_store_connection - Attribute type: DB instance object - Should be used only when the cache_store is set to "mongo" or "redis". This is necessary for production environments so you can specify the host, port, database, user and password to use to connect to the respective caching database selected.
